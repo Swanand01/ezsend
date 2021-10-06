@@ -23,15 +23,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text(
-          "Send",
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: uploading
           ? Center(child: CircularProgressIndicator())
           : Row(
@@ -48,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Expanded(
-                              flex: 3,
+                              flex: 4,
                               child: GestureDetector(
                                 onTap: () async {
                                   file =
@@ -68,10 +59,16 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(fontSize: 16),
                                 )),
                             Expanded(
-                              flex: 1,
+                              flex: 2,
                               child: Center(
                                 child: ElevatedButton(
-                                    child: Text("Upload"),
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Color(0xff6C63FF),
+                                        minimumSize: Size(150, 50)),
+                                    child: Text(
+                                      "Upload",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
                                     onPressed: () async {
                                       if (file != null) {
                                         makePostRequest(file);
@@ -82,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Expanded(
-                                flex: 1,
+                                flex: 2,
                                 child: GestureDetector(
                                     onTap: () {
                                       Clipboard.setData(
@@ -98,8 +95,37 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
-                  child: Image.network(
-                      "https://i.ibb.co/zXtB9th/undraw-uploading-go67.png"),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Expanded(
+                            child: Column(
+                          children: [
+                            Text(
+                              "ezSend",
+                              style: TextStyle(fontSize: 48),
+                            ),
+                            SizedBox(height: 24,),
+                            Text(
+                              "1. Upload a file.",
+                              style:
+                                  TextStyle(fontSize: 24, color: Colors.grey),
+                            ),
+                            Text(
+                              "2. Share the download link!",
+                              style:
+                                  TextStyle(fontSize: 24, color: Colors.grey),
+                            ),
+                          ],
+                        )),
+                      ),
+                      Expanded(
+                        child: Image.network(
+                            "https://i.ibb.co/zXtB9th/undraw-uploading-go67.png"),
+                      ),
+                    ],
+                  ),
                   flex: 1,
                 )
               ],
