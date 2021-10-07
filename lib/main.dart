@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           // Return a Widget or wrap it in a BeamPage for more flexibility
           return BeamPage(
             key: ValueKey('file-$fileId'),
-            title: 'A Book #$fileId',
+            title: 'ezSend - Download',
             popToNamed: '/',
             type: BeamPageType.scaleTransition,
             child: DownloadPage(enc: fileId),

@@ -21,115 +21,121 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: uploading
-          ? Center(child: CircularProgressIndicator())
-          : Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  file =
-                                      await FilePickerCross.importFromStorage();
-                                  setState(() {
-                                    fileName = file!.fileName!;
-                                  });
-                                },
-                                child: Image.network(
-                                    "https://i.ibb.co/nPkr1Dt/undraw-Add-files-re-v09g.png"),
-                              ),
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: Text(
-                                  fileName,
-                                  style: TextStyle(fontSize: 16),
-                                )),
-                            Expanded(
-                              flex: 2,
-                              child: Center(
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Color(0xff6C63FF),
-                                        minimumSize: Size(150, 50)),
-                                    child: Text(
-                                      "Upload",
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    onPressed: () async {
-                                      if (file != null) {
-                                        makePostRequest(file);
-                                      } else {
-                                        showToast("Please select a file");
-                                      }
-                                    }),
-                              ),
-                            ),
-                            Expanded(
-                                flex: 2,
-                                child: GestureDetector(
-                                    onTap: () {
-                                      Clipboard.setData(
-                                          ClipboardData(text: downloadurl));
-                                      showToast("Link copied");
-                                    },
-                                    child: Text(
-                                      downloadurl,
-                                      style: TextStyle(fontSize: 16),
-                                    )))
-                          ],
-                        )),
+      body: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                  elevation: 8,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                ),
-                Expanded(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Expanded(
-                            child: Column(
-                          children: [
-                            Text(
-                              "ezSend",
-                              style: TextStyle(fontSize: 48),
-                            ),
-                            SizedBox(height: 24,),
-                            Text(
-                              "1. Upload a file.",
-                              style:
-                                  TextStyle(fontSize: 24, color: Colors.grey),
-                            ),
-                            Text(
-                              "2. Share the download link!",
-                              style:
-                                  TextStyle(fontSize: 24, color: Colors.grey),
-                            ),
-                          ],
-                        )),
+                      Expanded(
+                        flex: 4,
+                        child: GestureDetector(
+                          onTap: () async {
+                            file = await FilePickerCross.importFromStorage();
+                            setState(() {
+                              fileName = file!.fileName!;
+                            });
+                          },
+                          child: Image.network(
+                              "https://i.ibb.co/nPkr1Dt/undraw-Add-files-re-v09g.png"),
+                        ),
                       ),
                       Expanded(
+                          flex: 1,
+                          child: Text(
+                            fileName,
+                            style: TextStyle(fontSize: 16),
+                          )),
+                      Expanded(
+                        flex: 2,
+                        child: Center(
+                          child: uploading
+                              ? Center(child: CircularProgressIndicator())
+                              : ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Color(0xff6C63FF),
+                                      minimumSize: Size(150, 50)),
+                                  child: Text(
+                                    "Upload",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  onPressed: () async {
+                                    if (file != null) {
+                                      makePostRequest(file);
+                                    } else {
+                                      showToast("Please select a file");
+
+                                      print(width);
+                                    }
+                                  }),
+                        ),
+                      ),
+                      Expanded(
+                          flex: 2,
+                          child: GestureDetector(
+                              onTap: () {
+                                Clipboard.setData(
+                                    ClipboardData(text: downloadurl));
+                                showToast("Link copied");
+                              },
+                              child: Text(
+                                downloadurl,
+                                style: TextStyle(fontSize: 16),
+                              )))
+                    ],
+                  )),
+            ),
+          ),
+          width > 600
+              ? Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: Text(
+                            "ezSend",
+                            style: TextStyle(fontSize: 48),
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            height: 24,
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: Text(
+                            "1. Upload a file.",
+                            style: TextStyle(fontSize: 24, color: Colors.grey),
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: Text(
+                            "2. Share the download link!",
+                            style: TextStyle(fontSize: 24, color: Colors.grey),
+                          )),
+                      Expanded(
+                        flex: 5,
                         child: Image.network(
                             "https://i.ibb.co/zXtB9th/undraw-uploading-go67.png"),
                       ),
                     ],
                   ),
-                  flex: 1,
                 )
-              ],
-            ),
+              : Container()
+        ],
+      ),
     );
   }
 
